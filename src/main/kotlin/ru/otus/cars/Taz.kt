@@ -39,6 +39,12 @@ object Taz: Car {
     }
 
     /**
+     * Горловина бензобака. Делегируем реализацию в бак.
+     */
+    override val tankMouth: TankMouth
+        get() = tank.mouth
+
+    /**
      * Руль вправо на [degrees] градусов
      */
     override fun wheelToRight(degrees: Int) {

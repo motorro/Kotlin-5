@@ -2,6 +2,7 @@ package ru.otus.cars
 
 import ru.otus.cars.fueling.LpgMouth
 import ru.otus.cars.fueling.Tank
+import ru.otus.cars.fueling.TankMouth
 import ru.otus.cars.fueling.WorkingTank
 import kotlin.random.Random
 
@@ -69,6 +70,12 @@ class Vaz2107 private constructor(color: String, private val tank: Tank) : VazPl
      * Делегируем приборы внутреннему классу
      */
     override val carOutput: CarOutput = VazOutput()
+
+    /**
+     * Горловина бензобака. Делегируем реализацию в бак.
+     */
+    override val tankMouth: TankMouth
+        get() = tank.mouth
 
     /**
      * Имеет доступ к внутренним данным ЭТОГО ВАЗ-2107!
