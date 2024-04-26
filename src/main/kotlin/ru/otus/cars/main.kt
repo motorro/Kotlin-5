@@ -1,5 +1,8 @@
 package ru.otus.cars
 
+import ru.otus.cars.fueling.LpgMouth
+import ru.otus.cars.fueling.PetrolMouth
+
 fun main() {
     println("\n===> drive cars...")
     driveCars()
@@ -18,6 +21,8 @@ fun main() {
     println(Taz.color)
     println("\n===> get fuel...")
     getFuel()
+    println("\n===> Fueling...")
+    fuelCars()
 }
 
 fun driveCars() {
@@ -101,4 +106,23 @@ fun getFuel() {
     println("Бензобаки:")
     println("2107: ${vaz1.carOutput.getFuelContents()}")
     println("2108: ${vaz2.carOutput.getFuelContents()}")
+}
+
+fun fuelCars() {
+    val cars = listOf(
+        Togliatti.buildCar(Vaz2107, Car.Plates("123", 77)),
+        Togliatti.buildCar(Vaz2108, Car.Plates("321", 78)),
+        Taz
+    )
+    cars.forEach(::fuelCar)
+}
+
+fun fuelCar(car: Car) {
+    println("Заправка $car")
+    car.tankMouth.open()
+    when (val mouth = car.tankMouth) {
+        is LpgMouth -> mouth.fuelLpg(10)
+        is PetrolMouth -> mouth.fuelPetrol(10)
+    }
+    println(car.carOutput.getFuelContents())
 }
