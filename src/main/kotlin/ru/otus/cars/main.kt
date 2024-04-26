@@ -120,9 +120,19 @@ fun fuelCars() {
 fun fuelCar(car: Car) {
     println("Заправка $car")
     car.tankMouth.open()
-    when (val mouth = car.tankMouth) {
-        is LpgMouth -> mouth.fuelLpg(10)
-        is PetrolMouth -> mouth.fuelPetrol(10)
+    fuelSafe {
+        when (val mouth = car.tankMouth) {
+            is LpgMouth -> mouth.fuelLpg(10)
+            is PetrolMouth -> mouth.fuelPetrol(10)
+        }
+        println(car.carOutput.getFuelContents())
     }
-    println(car.carOutput.getFuelContents())
+}
+
+inline fun fuelSafe(block: () -> Unit) {
+    try {
+        block()
+    } catch (e: Exception) {
+        println("Авария: ${e.message}, но все живы")
+    }
 }
